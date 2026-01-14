@@ -1,0 +1,67 @@
+<!doctype html>
+<title>To-Do List</title>
+<h1>To-Do Items</h1>
+
+<p><a href="{{ url_for('todo.add') }}">Add New</a></p>
+
+{% if invalid %}
+  <div style="border:1px solid #c00; padding:8px; margin-bottom:10px; color:#900;">
+    Invalid filter or sort parameters were supplied. Defaults have been applied.
+  </div>
+{% endif %}
+
+<form method="get" action="{{ url_for('todo.index') }}" style="margin-bottom: 12px;">
+  <label>
+    {{ list_options_form.status.label }}:
+    {{ list_options_form.status() }}
+  </label>
+
+  <label style="margin-left: 10px;">
+    {{ list_options_form.sort.label }}:
+    {{ list_options_form.sort() }}
+  </label>
+
+  <label style="margin-left: 10px;">
+    {{ list_options_form.order.label }}:
+    {{ list_options_form.order() }}
+  </label>
+
+  <button type="submit" style="margin-left: 10px;">Apply</button>
+</form>
+
+{% if todos %}
+  <table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Due Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in todos %}
+      <tr>
+        <td>{{ t.title }}</td>
+        <td>{{ t.dueDate or 'N/A' }}</td>
+        <td>{{ 'Completed' if t.isCompleted else 'Pending' }}</td>
+        <td>
+          <a href="{{ url_for('todo.view', todo_id=t.id) }}">View</a>
+          |
+          <a href="{{ url_for('todo.update', todo_id=t.id) }}">Edit</a>
+          |
+          {% if t.isCompleted %}
+            <a href="{{ url_for('todo.incomplete', todo_id=t.id) }}">Mark Incomplete</a>
+          {% else %}
+            <a href="{{ url_for('todo.complete', todo_id=t.id) }}">Complete</a>
+          {% endif %}
+          |
+          <a href="{{ url_for('todo.delete', todo_id=t.id) }}" onclick="return confirm('Delete this item?');">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No to-do items yet.</p>
+{% endif %}

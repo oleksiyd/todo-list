@@ -1,0 +1,25 @@
+<!doctype html>
+<title>View To-Do</title>
+<h1>{{ todo.title }}</h1>
+
+<p><strong>Description:</strong> {{ todo.description or 'N/A' }}</p>
+<p><strong>Due Date:</strong> {{ todo.dueDate or 'N/A' }}</p>
+<p><strong>Status:</strong> {{ 'Completed' if todo.isCompleted else 'Pending' }}</p>
+<p>
+  <strong>Created At (UTC):</strong>
+  {{ todo.createdAt | format_utc }}
+</p>
+
+<p>
+  <a href="{{ url_for('todo.update', todo_id=todo.id) }}">Edit</a>
+  |
+  {% if todo.isCompleted %}
+    <a href="{{ url_for('todo.incomplete', todo_id=todo.id) }}">Mark Incomplete</a>
+  {% else %}
+    <a href="{{ url_for('todo.complete', todo_id=todo.id) }}">Complete</a>
+  {% endif %}
+  |
+  <a href="{{ url_for('todo.delete', todo_id=todo.id) }}" onclick="return confirm('Delete this item?');">Delete</a>
+  |
+  <a href="{{ url_for('todo.index') }}">Back</a>
+</p>

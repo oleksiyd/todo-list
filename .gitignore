@@ -1,0 +1,53 @@
+# =========================
+# Virtual environments
+# =========================
+venv/
+.env/
+.env.*
+
+# =========================
+# Python cache / artifacts
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# =========================
+# Test / coverage artifacts
+# =========================
+.pytest_cache/
+.coverage
+htmlcov/
+
+# =========================
+# Flask / runtime files
+# =========================
+todos.json
+instance/
+*.log
+
+# =========================
+# IDE / editor settings
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Build / packaging
+# =========================
+dist/
+build/
+*.egg-info/
+
+# =========================
+# Data files
+# =========================
+data/
